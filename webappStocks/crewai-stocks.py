@@ -77,15 +77,8 @@ stockAnalystWrite = Agent(
 #Crindo o agente Analista de Notícias
 newsAnalyst = Agent(
     role= "Stock News Analyst",
-    goal="""Create a short summary of the market news related to the stock {ticket} company. Specify the current trend - up, down or sideways with
-    the news context. For each request stock asset, specify a numbet between 0 and 100, where 0 is extreme fear and 100 is extreme greed.""",
-    backstory="""You're highly experienced in analyzing the market trends and news and have tracked assest for more then 10 years.
-
-    You're also master level analyts in the tradicional markets and have deep understanding of human psychology.
-
-    You understand news, theirs tittles and information, but you look at those with a health dose of skepticism. 
-    You consider also the source of the news articles. 
-    """,
+    goal="Summarize market news for the {ticket} company, noting the trend (up, down, or sideways) with context. Assign a score from 0 (extreme fear) to 100 (extreme greed) for each stock asset",
+    backstory="With over 10 years of experience in market trend analysis and asset tracking, you are a master analyst in traditional markets with a deep understanding of human psychology. You assess news and its sources with a healthy skepticism.",
     llm= llm,
     max_iter= 10,
     memory= True,
@@ -111,18 +104,12 @@ get_news = Task(
 )
 
 writeAnalyses = Task(
-    description = """Use the stock price trend and the stock news report to create an analyses and write the newsletter about the {ticket} company
-    that is brief and highlights the most important points.
-    Focus on the stock price trend, news and fear/greed score. What are the near future considerations?
-    Include the previous analyses of stock trend and news summary.
-""",
-    expected_output= """"An eloquent 3 paragraphs newsletter formated as markdown in an easy readable manner. It should contain:
-
-    - 3 bullets executive summary 
-    - Introduction - set the overall picture and spike up the interest
-    - main part provides the meat of the analysis including the news summary and fead/greed scores
-    - summary - key facts and concrete future trend prediction - up, down or sideways.
-""",
+    description = "Analyze the stock price trend and news report for the {ticket} company to create a brief newsletter highlighting key points. Focus on the trend, news, and fear/greed score, along with near-future considerations, and include previous analyses of the trend and news summary.",
+    expected_output= """A 3-paragraph newsletter formatted in markdown for readability, including:
+3 bullet points for an executive summary
+Introduction that sets the context and piques interest
+Main analysis with news summary and fear/greed scores
+Summary highlighting key facts and future trend prediction (up, down, or sideways).""",
     agent = stockAnalystWrite,
     context = [getStockPrice, get_news]
 )
