@@ -32,7 +32,7 @@ yahoo_finance_tool = Tool(
 
 #cria uma variável de ambiente para pegar a chave API da OpenIA
 os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-llm = ChatOpenAI(model="gpt-3.5-turbo")
+llm = ChatOpenAI(model="gpt-3.5-turbo-16k")
 
 
 #criando o agente Analista de histórico das ações
@@ -56,9 +56,7 @@ stockPriceAnalyst = Agent(
 
 getStockPrice = Task(
     description= "Analyze the stock {ticket} price history and create a trend analyses of up, down or sideways",
-    expected_output = """" Specify the current trend stock price - up, down or sideways. 
-    eg. stock= 'APPL, price UP'
-""",
+    expected_output = "Specify the current trend stock price - up, down or sideways. eg. stock= 'APPL, price UP'",
     agent= stockPriceAnalyst
 )
 
@@ -68,13 +66,8 @@ search_tool = DuckDuckGoSearchResults(backend='news', num_results=10)
 
 stockAnalystWrite = Agent(
     role = "Senior Stock Analyts Writer",
-    goal= """"Analyze the trends price and news and write an insighfull compelling and informative 3 paragraph long newsletter based on the stock report and price trend. """,
-    backstory= """You're widely accepted as the best stock analyst in the market. You understand complex concepts and create compelling stories
-    and narratives that resonate with wider audiences. 
-
-    You understand macro factors and combine multiple theories - eg. cycle theory and fundamental analyses. 
-    You're able to hold multiple opinions when analyzing anything.
-""",
+    goal= "Analyze the trends price and news and write an insighfull compelling and informative 3 paragraph long newsletter based on the stock report and price trend.",
+    backstory= "You're a top stock analyst known for grasping complex concepts and crafting compelling narratives. You understand macro factors, combine theories like cycle theory and fundamental analysis, and can hold multiple perspectives in your analyses.",
     llm=llm,
     max_iter = 5,
     memory=True,
