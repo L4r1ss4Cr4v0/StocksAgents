@@ -33,7 +33,7 @@ yahoo_finance_tool = Tool(
 
 #cria uma variável de ambiente para pegar a chave API da Google (Gemini)
 os.environ["GOOGLE_API_KEY"] = st.secrets['GOOGLE_API_KEY']
-# llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
 
 
 #criando o agente Analista de histórico das ações
