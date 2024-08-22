@@ -1,7 +1,6 @@
 yfinance
 crewai
 langchain
-langchain-core
 langchain-google-genai
 langchain-community
 duckduckgo-search
