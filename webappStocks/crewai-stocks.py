@@ -8,7 +8,8 @@ import yfinance as yf
 from crewai import Agent, Task, Crew, Process
 
 from langchain.tools import Tool
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from langchain_community.tools import DuckDuckGoSearchResults
 
 import streamlit as st
@@ -20,7 +21,7 @@ def fetch_stock_price(ticket):
     stock = yf.download(ticket, start="2023-08-08", end="2024-08-08")
     return stock
 
-#transformando a def em ferramenta
+#transformando a função em ferramenta
 yahoo_finance_tool = Tool(
     name = "Yahoo Finance Tool",
     # pra que serve
@@ -28,11 +29,11 @@ yahoo_finance_tool = Tool(
     func= lambda ticket: fetch_stock_price(ticket)
 )
 
-#importando a LLM da openIA
+#importando a LLM Gemini
 
-#cria uma variável de ambiente para pegar a chave API da OpenIA
-os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-llm = ChatOpenAI(model="gpt-3.5-turbo-16k")
+#cria uma variável de ambiente para pegar a chave API da Google (Gemini)
+os.environ["GOOGLE_API_KEY"] = st.secrets['GOOGLE_API_KEY']
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
 
 
 #criando o agente Analista de histórico das ações
