@@ -1,20 +1,24 @@
 
 import json 
 import os
-from datetime import datetime
+# from datetime import datetime
 
-import yfinance as yf
+# import yfinance as yf
 
-from crewai import Agent, Task, Crew, Process
+# from crewai import Agent, Task, Crew, Process
 
-from langchain.tools import Tool
+# from langchain.tools import Tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from langchain_community.tools import DuckDuckGoSearchResults
+# from langchain_community.tools import DuckDuckGoSearchResults
 
 import streamlit as st
 
 #criado uma função para ser usada pelo CrewIA
+
+#cria uma variável de ambiente para pegar a chave API da Google (Gemini)
+os.environ["GOOGLE_API_KEY"] = st.secrets['GOOGLE_API_KEY']
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro")
 
 def fetch_stock_price(ticket):
     # indica o histórico de preços de determinada ação na bolsa em um período determinado.
@@ -31,9 +35,7 @@ yahoo_finance_tool = Tool(
 
 #importando a LLM Gemini
 
-#cria uma variável de ambiente para pegar a chave API da Google (Gemini)
-os.environ["GOOGLE_API_KEY"] = st.secrets['GOOGLE_API_KEY']
-llm = ChatGoogleGenerativeAI(model="gemini-pro")
+
 
 
 #criando o agente Analista de histórico das ações
