@@ -18,7 +18,7 @@ import streamlit as st
 
 def fetch_stock_price(ticket):
     # indica o histórico de preços de determinada ação na bolsa em um período determinado.
-    stock = yf.download(ticket, start="2023-08-08", end="2024-08-08")
+    stock = yf.download(ticket, start=datetime.now().replace(year=datetime.now().year - 1).strftime('%Y-%m-%d'), end=datetime.now().strftime("%Y-%m-%d"))
     return stock
 
 #transformando a função em ferramenta
